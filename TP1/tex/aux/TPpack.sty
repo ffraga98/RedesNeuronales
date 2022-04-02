@@ -1,0 +1,31 @@
+% \documentclass[a4paper,11pt]{article}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,bookmarksopen=true]{hyperref}
+\usepackage{bookmark} %
+\usepackage{fancyhdr} %Para customizar el diseño del documento.
+\usepackage[spanish]{babel} %Traduce títulos del latex. 
+\usepackage[utf8]{inputenc} %Para que latex pueda interpretar distintos alfabetos
+\usepackage[T1]{fontenc} %Para tener caracteres de la lengua española
+\usepackage{a4wide} %Aumenta el ancho de tipeo en hoja A4
+\usepackage{graphicx} %Provee la posibilidad de poner argumentos al comando \includegraphics
+\usepackage{float} %Interfase para definir objetos flotantes como (figures y tables)
+\usepackage{enumerate} %Permite enumerar automáticamente titulos, ecuaciones, etc. 
+\usepackage{multicol} %Permite tener mas de una columna. (max 10)
+\usepackage{mathtools} %Aporta paquetes para la mejora archivos que contienen mucha matematica
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage[table]{xcolor}
+\renewcommand{\baselinestretch}{1.0}
+
+%Para tener un estilo para el código
+\usepackage{xcolor}
+\usepackage{listings}
+
+\pagestyle{fancy} % Encabezado y pie de página
+\fancyhf{}
+\fancyhead[L]{ Comunicación de Datos - [86.12] - FIUBA - 2do Cuatrimestre 2021}
+\fancyhead[R]{\hfill\includegraphics[width=3cm]{lhead.png}}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{Página \thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\def\hat{\mathaccent "705E\relax}

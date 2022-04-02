@@ -1,0 +1,3 @@
+perro.bmp
+v.bmp
+quijote.bmp

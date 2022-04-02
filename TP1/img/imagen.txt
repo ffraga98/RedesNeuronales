@@ -1,0 +1,2 @@
+paloma.bmp
+perro.bmp

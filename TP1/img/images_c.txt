@@ -1,0 +1,6 @@
+paloma.bmp
+panda.bmp
+perro.bmp
+quijote.bmp
+torero.bmp
+v.bmp

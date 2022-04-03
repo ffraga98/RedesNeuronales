@@ -11,7 +11,7 @@ import os
 import imageio as iio
 
 nrows, ncols = 50, 65
-path = '/home/fernando/Documentos/Archivos FIUBA/1C2022/REDES_NEURONALES/TP/TP1/img'
+path = '../img'
 
 
 #Carga la imagen a una matriz.
@@ -77,8 +77,8 @@ def color2binary_v(state_v, umbral = 255/2):
 def img_with_noise(filename, intensity):
     img = bmp2arr(filename)
     noise = np.random.rand(img.shape[0],img.shape[1])
-    img += noise * 255 * intensity 
-    img *= noise    
+    img *= noise
+    img += noise * 255 * intensity     
     return img.reshape( [nrows*ncols, 1] )
 
 def reconstruct_img(HebbMatrix,img):
@@ -143,7 +143,7 @@ def partial_image_horizontal(image, percentage):
 
 
 def read_images(filename):
-    path = '/home/fernando/Documentos/Archivos FIUBA/1C2022/REDES_NEURONALES/TP/TP1/img'
+    path = '../img'
     #Leo los nombres de las imagenes
     path_images = open(os.path.join(path,filename), "r")
     return path_images.read().split('\n')[0:-1]

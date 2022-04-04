@@ -1,0 +1,3 @@
+paloma.bmp
+quijote.bmp
+torero.bmp

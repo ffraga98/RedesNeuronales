@@ -1,138 +1,103 @@
-from herp.derp.functions import read_images, color2binary_v, img2learn, bmp2arr, ley_hebb_gral, reconstruct_img, img_with_noise, partial_image, partial_reconstruct_img
+from herp.derp.functions import  images_matrix, plot_evolution, matrix_alteraciones_img, nrows, ncols, read_images, color2binary_v, img2learn, ley_hebb_gral
 import numpy as np
-import matplotlib.pyplot as plt
 
 
-nrows, ncols = 50, 65
 
+#EJERCICIO 1.
+# Aprende una imagen a la vez e intenta reconstruirla desde el ruido.
+# Obs: Muchas veces en la reconstrucción converge al inverso, 
+# el cual es estado espureo
 def verificar_aprendizaje(filename):
+    #Lectura de los nombres de archivos
     images =  read_images(filename)
+    
     #Crear una matriz W para cada imagen.
     for img in images:
         img = np.array([img])
         W = ley_hebb_gral(img)
         
         #Crear una matriz ruidosa
-        init_img = color2binary_v( np.random.rand(nrows * ncols, 1) * 255 )
+        init_img = color2binary_v( np.random.rand(nrows * ncols, 1) * 255 ).transpose()
         
-        fig, axs = plt.subplots(1,3)
-        axs = axs.reshape([3,1])
-        #Ploteo la imagen inicial
-        plot_vector(init_img, axs, 0, 0)
-        axs[0,0].set_title('Estado inicial')
-        
-        #Reconstruir parcialmente la imagen 
-        partial_reconstruct_img(W, init_img)
-        #Ploteo
-        plot_vector(init_img, axs, 1, 0)
-        axs[1,0].set_title('Estado intermedio')
-            
-        #Reconstruir la imagen 
-        reconstruct_img(W, init_img)  
-        #Ploteo      
-        plot_vector(init_img, axs, 2, 0)
-        axs[2,0].set_title('Estado final')
-        
+        plot_evolution(init_img, W)
 
-        
+
+#EJERCICIO 2.
+# Intenta reconstruir las imagenes aprendidas partiendo de distintas alteraciones
+# de la imagen original.
 def evolucion_version_alterada(filename):
     images =  read_images(filename)
     
     #Crear una matriz W
     W = ley_hebb_gral(images)
-            
-    #Pasarle 4 versiones de un imagen (Ruido, V, H, HV)
-    #Graficar estado inicial, intermedio y final de cada version de imagen
+
     for img in images:
-        fig, axes = plt.subplots(4,3)
-        axes[0,0].set_title('Estado inicial')
-        axes[0,1].set_title('Estado intermedio')
-        axes[0,2].set_title('Estado final')
-        plot_version_alterada(W, img, 'ruido',axes)
-        plot_version_alterada(W, img, 'H', axes)
-        plot_version_alterada(W, img, 'V', axes)
-        plot_version_alterada(W, img, 'HV', axes)        
+        img = matrix_alteraciones_img(img)
+        plot_evolution( img, W )
 
 
-# def verificar_estados_espureos():
-    #Hay alguna forma de evaluar los estados espureos individualmente?
-    # Podría probar que aprendiendo una imagen tengo dos estados.
-    # Al entrenar 3...?
+# EJERCICIO 3.
+#Aprende las imagenes que le pase y grafica la evolucion partiendo desde la
+# combinación lineal de las imagenes que le pases.
+def verificar_estados_espureos(filename):
+    images = read_images(filename)
+    W = ley_hebb_gral(images)
     
+    images = images_matrix(images)
 
-def plot_version_alterada(HebbMatrix, image, alteracion, axs):
-    img = np.empty([nrows, ncols])
+
+    #Creamos combinaciones lineales de las imagenes aprendidas.
+    img = ( images[0] + images[1] + images[2] )
+    img = img2learn( img, 0 )
+    img = img.reshape([1, nrows*ncols])
+    images = np.append(images, img, axis = 0)
     
-    if(alteracion == 'ruido'):
-        img = img_with_noise(image, 0.35)
-        img = color2binary_v(img, 255/5)    
-        row = 0
-    elif(alteracion == 'H'):
-        img = partial_image(image, 'H', 50)
-        row = 1
-    elif(alteracion == 'V'):
-        img = partial_image(image, 'V', 50)
-        row = 2
-    elif(alteracion == 'HV'):
-        img = partial_image(image, 'HV', 50)
-        row = 3
+    img = (  - images[0] + images[1] + images[2] )
+    img = img2learn( img, 0 ).reshape([1, nrows*ncols])
+    images = np.append(images, img, axis = 0)
+    
+    img = (  images[0] - images[1] + images[2] )
+    img = img2learn( img, 0 ).reshape([1, nrows*ncols])
+    images = np.append(images, img, axis = 0)
+    
+    img = (  images[0] + images[1] - images[2] )
+    img = img2learn( img, 0 ).reshape([1, nrows*ncols])
+    images = np.append(images, img, axis = 0)
+   
+    img = (  images[0] - images[1] - images[2] )
+    img = img2learn( img, 0 ).reshape([1, nrows*ncols])
+    images = np.append(images, img, axis = 0)
+    
+    img = (  - images[0] - images[1] - images[2] )
+    img = img2learn( img, 0 ).reshape([1, nrows*ncols])
+    images = np.append(images, img, axis = 0)
+    
+    images[0] = ( images[0] * -1 ).reshape([1, nrows*ncols])
+    images[1] = ( images[1] * -1 ).reshape([1, nrows*ncols])
+    images[2] = ( images[2] * -1 ).reshape([1, nrows*ncols])
+    # images = np.delete( images, 2, axis = 0)
+    # images = np.delete( images, 1, axis = 0)
+
+    plot_evolution(images, W)
         
-    #Ploteo la imagen inicial
-    plot_vector(img, axs, row, 0)
-          
-        
-    #Reconstruir parcialmente la imagen 
-    partial_reconstruct_img(HebbMatrix, img)
-    #Ploteo
-    plot_vector(img, axs, row, 1)
+       
     
+#EJERCICIO 4.
+# Aprende todas las imagenes que le pases y evalua su evolución
+#desde la imagen original.
     
-    #Reconstruir la imagen 
-    reconstruct_img(HebbMatrix, img)  
-    #Ploteo     
-    plot_vector(img, axs, row, 2)
-    
-    
-    
-# def estados_espureos():
-#     # No se todavia bien que pretenden de este ejericio
-#     # Leer: Spurious States, en la sección 2.2, Hertz, Krogh & Palmer, pág. 24 
-
 def minimo_local_desde_original(filename):
     images =  read_images(filename)
     
-    #Crear una matriz W
+    #Crear una matriz W y cargar una matriz con imagenes
     W = ley_hebb_gral(images)
-    
-    #Pasarle 4 versiones de un imagen (Ruido, V, H, HV)
+    images = images_matrix(images)
     #Graficar estado inicial, intermedio y final de cada version de imagen
     plot_evolution(images, W)
         
-def plot_vector(vector, axes, row, col):
-    vector = vector.reshape([nrows, ncols])
-    axes[row,col].imshow( vector, cmap='binary', interpolation='nearest', origin='lower')
-    axes[row,col].axis('off')
     
-def plot_evolution(images, HebbMatrix):
-    fig, axs = plt.subplots( len(images), 3)
-    indices = np.arange(0, len(images))
-    axs[0,0].set_title('Estado inicial')
-    axs[0,1].set_title('Estado intermedio')
-    axs[0,2].set_title('Estado final')
     
-    for image, row in zip(images, indices):
-        img = img2learn( bmp2arr(image) )
-       
-        #Ploteo la imagen inicial      
-        plot_vector(img, axs, row, 0)
-       
-        #Reconstruir parcialmente la imagen 
-        partial_reconstruct_img(HebbMatrix, img)
-        #Ploteo      
-        plot_vector(img, axs, row, 1)
-        
-        
-        #Reconstruir la imagen 
-        reconstruct_img(HebbMatrix, img)  
-        #Ploteo      
-        plot_vector(img, axs, row, 2)
+    
+#FUNCIONES AUXILIARES. (Deberían ir a functions.py)    
+
+

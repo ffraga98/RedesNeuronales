@@ -3,26 +3,22 @@
 from herp.derp.exercises1 import verificar_aprendizaje, evolucion_version_alterada, verificar_estados_espureos, minimo_local_desde_original
 from herp.derp.exercises2 import ejercicio2_A, ejercicio2_B
 from herp.derp.exercises3 import ejercicio3_A, ejercicio3_B
-#%% 1a) VERIFICACION DE APRENDIZAJE
-    
+#%% EJERCICIO 1. 
+
+# Verificacion de aprendizaje  
 # verificar_aprendizaje('images.txt')
 
-#%% 1b) VERSIONES ALTERADAS
-# Mejorable
+# Reconstrucción de imagenes alteradas.
 # evolucion_version_alterada('images_ejb.txt')
 
-#%% 1c) ESTADOS ESPUREOS
-
+# Verificar la existencia de estados espureos.
 # verificar_estados_espureos('images_ejc.txt')
-# %%% 1d) MINIMO LOCAL DESDE ORIGINAL
 
+# Reconstrucción de 6 imagenes aprendidas desde la imagen original. 
 # minimo_local_desde_original('images.txt')
 
-#TODO:
-    # Poner las imagenes que solo convergen a estados espureos.
-    # Guardar imagenes como SVGs.
-        
-#%% 
+
+#%% EJERCICIO 2. Calculo de la capacidad.
 # ejercicio2_A()
 # ejercicio2_B()
 
@@ -33,7 +29,26 @@ from herp.derp.exercises3 import ejercicio3_A, ejercicio3_B
  # 0.02941964 0.02463018 0.02630998 0.01721691 0.01425848 0.00826634
  # 0.01044356 0.00340398]
  
- #%%
+ #%% EJERCICIO 3. Eliminación de interconexiones.
 # ejercicio3_A()
-ejercicio3_B()
+# ejercicio3_B()
+
+#Resultados 3B
+# [0.15208328 0.14830995 0.14374743 0.14248358 0.13708357 0.13820945
+ # 0.137936   0.13749881 0.13555145 0.12407283 0.12765047 0.12532907
+ # 0.11980072 0.12313419 0.12126948 0.10901354 0.11439491 0.11695343
+ # 0.1047608  0.10836307 0.10744219 0.0981485  0.10519909 0.10663665
+ # 0.10284612 0.09425643 0.08860976 0.08838354 0.08477495 0.08341143
+ # 0.08123421 0.08513912 0.07503406 0.07496505 0.0763229  0.07588295
+ # 0.07419344 0.0726625  0.06989415 0.06782165 0.06993287 0.06820644
+ # 0.06831355 0.06532453 0.06590851 0.06556636 0.06390863 0.06508554
+ # 0.06354641 0.06427992 0.06015114 0.05777099 0.06053152 0.0559271
+ # 0.05605677 0.05355177 0.05326302 0.05048177 0.05019089 0.05013583
+ # 0.04875344 0.04806191 0.04631291 0.0439036  0.04395587 0.04221989
+ # 0.04069672 0.03982418 0.04080995 0.03732158 0.03537411 0.03635063
+ # 0.03528475 0.03505278 0.03490012 0.03425775 0.03247141 0.03013592
+ # 0.02904366 0.02600015 0.02515692 0.02501782 0.02450012 0.02284147
+ # 0.02148555 0.01943282 0.01868486 0.01768512 0.0161094  0.01552647
+ # 0.01392526]
  
+ #%% EJERCICIO 4.

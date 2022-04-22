@@ -37,26 +37,15 @@ def ejercicio3_A():
         plt.plot(porcentajes,errores, label = "Patrones =" + str(num_patterns))
         plt.scatter(porcentajes[::100],errores[::100])
         
-    plt.xlabel('Probabilidad de Error')
-    plt.ylabel('Porcentaje olvidado')
+    plt.ylabel('Probabilidad de Error')
+    plt.xlabel('Porcentaje olvidado')
     plt.title("Numero de Neuronas " + str(N))
     plt.grid(which = 'both', axis = 'both', linestyle = '--')    
     plt.legend()
 
 
-    
-#  En el segundo cambia, ya que tengo que mantener el error, por lo tanto los 
-# patrones yo neuronas variaran a medida que yo vaya "olvidando" interconexiones.
-#  Lo cual me hace tener que recalcular la W. Si yo modifico las neuronas, voy a
-# tener que borrar más interconexiones. Mientras que si modifico las imagenes,
-# solo los elementos de W se modifican, pero para tener un gran rango de movimiento
-# voy a tener que tener una cantidad suficiente de neuronas.
-
-#  Ahora, para el calculo de la capacidad, tengo otro problema, es que necesito
-# dos puntos distintos dentro del plano Patrones vs Neuronas.
-
-# Si voy aumentando las imagenes hasta conseguir el error, 
 def ejercicio3_B():
+    fig = plt.figure()
     #Fijo la probabilidad de error
     probabilidadError = 0.0036
     patrones_N =  0.138

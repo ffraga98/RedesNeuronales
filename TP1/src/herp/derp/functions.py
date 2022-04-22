@@ -82,9 +82,9 @@ def img_with_noise(filename, intensity):
 #Dado un vector de nombres de imagenes, devuelve una matriz donde cada fila 
 #es el vector de estados de la imagen
 def images_matrix(images):
-    img = np.empty([1,nrows*ncols])
-    for image in images:
-        img = np.append( img, img2learn( bmp2arr(image) ), axis = 0)
+    img = np.empty([0,nrows*ncols])
+    for file in images:
+        img = np.append( img, np.reshape( img2learn(bmp2arr(file)), [1,nrows*ncols]) , axis = 0)
     # img = np.delete( img, 0, axis = 0)    
     return img
 
@@ -168,7 +168,7 @@ def ley_hebb_from_filenames(filenames):
     images = np.empty([0,nrows*ncols])
     
     for file in filenames:
-        images = np.append(images, img2learn(bmp2arr(file)), axis = 0)
+        images = np.append(images, np.reshape(img2learn(bmp2arr(file)), [1,nrows*ncols]) , axis = 0)
     
     
     W = ley_hebb_gral(images)
@@ -180,7 +180,13 @@ def read_images(filename):
     #Leo los nombres de las imagenes
     path_images = open(os.path.join(path,filename), "r")
     return path_images.read().split('\n')[0:-1]
+
+
+
+
 #%% FUNCIONES AGREGADAS PARA EL EJERCICIO 2 y 3
+
+
 
 #Retorona el patron reconstruido sincronicamente.
 def reconstruct_syn(HebbMatrix, img, proportion_of_index = 1):
@@ -222,8 +228,8 @@ def calcular_error_patron(img_original, img_final):
 #Hace una aproximación lineal con los vectores de igual tamaño que le pases.
 # Utilizado para calcular la capacidad.
 def calculo_capacidad( n, p ):
-   coef_pol = np.polyfit( n, p, 1 )
-   return coef_pol[0], coef_pol[1]
+   coef_pol = np.polynomial.polynomial.Polynomial.fit( n, p, 1 ).convert().coef
+   return coef_pol[1], coef_pol[0]
 
 #Genera num_patrones vectores aletoriamente de un largo de neuronas.
 # Se puede especificar la covarianza, en tal caso se generan normales 
@@ -254,34 +260,25 @@ def calculo_neuronas_patrones(pError, capacidad_esperada, num_img, covarianza = 
 
 #Algoritmo de fuerza bruta para obtener las neuronas que obtengan un error 
 # menor a la probabilidad de error.
-def calcular_neuronas(pError, capacidad_esperada, num_patrones, covarianza = 'None', porcentaje_olvido = 0):
+def calcular_neuronas(pError, capacidad_esperada, num_patrones, covarianza = "None", porcentaje_olvido = 0):
     neuronas = np.empty(0) 
     
     #Utilizo la capacidad esperada para inicializar la cantidad de neuronas
     # en un numero cercano al esperado.
     n_init = (num_patrones/capacidad_esperada)
-    n_init -= n_init/4
+    n_init -= n_init/2
     n = int(n_init)
 
     #Loop para calcular muchas veces la cantidad de neuronas y poder promediar 
     # los resultados.
-    for i in range(20):
+    for i in range(10):
         error = 1
         while( pError < error):
-            n += 1
-            for j in range(5): 
-                #Intenta 5 veces con la misma cantidad de neuronas.
-                error = calcular_error(num_patrones, n, covarianza, porcentaje_olvido)
-                if(pError < error): break
+            n += 12
+            error = calcular_error(num_patrones, n, covarianza, porcentaje_olvido)
             
-            if(neuronas.shape[0] != 0): 
-                #En caso de que hay una dif mayor a 600, reseteo el contador.
-                #Esto se utilizó para evitar que quede eternamente aumentando neuronas, 
-                # especialmente en numeros extremadamente altos.
-                if( n - neuronas[-1] > 600):
-                    n = int(n_init)
         neuronas = np.append(neuronas, n)
-        n = int(n_init)
+        n = int(np.mean(neuronas)*3/4)
 
     #Retorno el promedio del numero de las neuronas.
     return np.mean(neuronas)
@@ -313,3 +310,72 @@ def olvidar_aprendizaje(HebbMatrix, percentage):
     for i in indexes:
         newHebbMatrix[i] = 0
     return np.reshape(newHebbMatrix, [HebbMatrix.shape[0], HebbMatrix.shape[1]])
+
+
+
+
+#%% FUNCIONES AUXILIARES PARA EL EJERCICIO 4
+
+
+
+#Calcula un vector de largo filas*columnas, con probabilidad 1/2 de ser 1 y -1.
+def generate_vector_spines(n_filas, n_columnas):
+    s = np.random.binomial( 1 , 0.5, [1, n_filas*n_columnas] )
+    return 2*s-1      
+
+# Devuelve una matriz W con las conexiones de dipolos según la forma en la que
+#se encuentran ordenados
+def matriz_conexion_dipolos(n_rows,n_spines):
+    W = np.zeros([n_spines,n_spines])
+    
+    for i in range(n_spines):
+        for j in range(n_spines):
+            W[i,j] = 1 if estan_conectadas(i,j, n_rows, n_spines) else 0  
+            
+    return W
+    
+# Devuelve true si dos dipolos son vecinos, false en caso contrario
+def estan_conectadas(x1,x2, dimension, n_spines):
+    ncols = int(n_spines/dimension)
+    fila1 = int(x1/ncols)
+    fila2 = int(x2/ncols)
+    
+    
+    resultado = ( abs(x1 - x2) == 1 )
+    
+    if abs(fila1 - fila2) == 1:
+        x1 = (x1) - ncols*fila1
+        x2 = (x2) - ncols*fila2
+        resultado = ( abs(x1 - x2) == 0 )
+    
+    return resultado
+
+
+# Calcula la energía de un vector de estado.
+def calcular_energia(HebbMatrix, state):
+    return -1/2 * ( state.dot( HebbMatrix.dot( state.transpose() ) ) )[0]
+
+# Calcula la diferencia de energía entre dos vectores de estados.
+def variacion_energia(state_1, state_2, HebbMatrix):
+    return calcular_energia(HebbMatrix, state_2) - calcular_energia(HebbMatrix, state_1)
+  
+# Calcula la probabilidad de cambio, según la temperatura.
+#En caso de que la variación de energía sea negativa, caso en el cual
+#se debe aceptar siempre el cambio, devuelve -1. 
+def probabilidad_cambio_estado(state_1, state_2, HebbMatrix, T):
+    #constants.k = cte de Boltzmann
+    delta_H = variacion_energia(state_1, state_2, HebbMatrix)
+    if delta_H < 0:
+        return -1
+    
+    return np.exp( - delta_H / T )
+
+
+#Regla de decisión sobre si aceptar un nuevo vector de estados o no.
+def actualizar(old_state, new_state, HebbMatrix, T):
+    p = probabilidad_cambio_estado(old_state, new_state, HebbMatrix, T )
+    if( p == -1 or np.random.binomial(1,p,[1])[0] ):
+        return np.copy(new_state)
+    
+    return np.copy(old_state)
+    

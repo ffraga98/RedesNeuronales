@@ -7,14 +7,34 @@
 - Evolución de la red inicializando de imagenes alteradas.
 - Estados espurios.
 
+<p align="center">
+  <img alt="Reconstruccion Anonymous" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP1/imagenesEjercicio/Ej1b/v.svg" width=35%>
+  <img alt="Estados espurios" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP1/imagenesEjercicio/Ej1d/aprendiendo_todas.svg" width=35%>
+<p/>
+
 ### Ejercicio 2
 - Cálculo estadístico de la capacidad de una red de Hopfield '82.
 - Visualización de la dependencia de la capacidad en función de la correlación.
 
+<p align="center">
+  <img alt="Capacidad Probabilidad de Error 0.01" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP1/imagenesEjercicio/Ej2a/pe_01.svg" width=35%>
+  <img alt="Capacidad Probabilidad de Error 0.1" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP1/imagenesEjercicio/Ej2a/pe_1.svg" width=35%>
+<p/>
+
 ### Ejercicio 3
 - Representación del error y la capacidad en función de sinapsis elimindas.
-- Modelo Ising en una y dos dimensiones.
 
+<p align="center">
+  <img alt="Error vs sinapsis eliminadas 1" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP1/imagenesEjercicio/Ej3a/error_porcentaje.svg" width=35%>
+  <img alt="Error vs sinapsis eliminadas 2" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP1/imagenesEjercicio/Ej3b/capacidad_olvido.svg" width=35%>
+<p/>
+
+### Ejercicio 4
+- Modelo Ising en una y dos dimensiones.
+<p align="center">
+  <img alt="Ising 1D" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP1/imagenesEjercicio/Ej4/1D.svg" width=35%>
+  <img alt="Ising 1D" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP1/imagenesEjercicio/Ej4/2D.svg" width=35%>
+<p/>
 
 ## [Trabajo Practico N°2: Perceptrón](https://github.com/ffraga98/RedesNeuronales/blob/main/TP2/TP2_FRAGA_102369.pdf)
 
@@ -23,9 +43,18 @@
 - Implementación de un preceptrón simple. Aprendizaje de las función lógicas de la $\mathbf{AND}$ y la $\mathbf{OR}$ ( 2 y 4 entradas).
 - Visualización de *recta discriminadora*.
 
+<p align="center">
+  <img alt="Resultados 2 Entradas" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP2/img/ej1/pesos2entradas.png" width=40%><br>
+  <img alt="Recta Discriminadora" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP2/img/ej1/rectasDiscriminatorias.png" width=40%>
+<p/>
+
 ### Ejercicio 2
 
 - Capacidad en función del número de patrones enseñados.
+
+<p align="center">
+  <img alt="Resultados 2 Entradas" src="https://github.com/ffraga98/RedesNeuronales/blob/main/TP2/img/ej2/capacidad.png" width=35%>
+<p/>
 
 ### Ejercicio 3 
 

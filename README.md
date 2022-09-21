@@ -1,6 +1,6 @@
 # Trabajos prácticos - FIUBA - [86.54] - Redes Neuronales
 
-## Trabajo Practico N°1: Red Hopfield '82
+## [Trabajo Practico N°1: Red Hopfield '82](https://github.com/ffraga98/RedesNeuronales/blob/main/TP1/TP1_FRAGA_102369.pdf)
 
 ### Ejercicio 1
 - Entrenamiento de una red de Hopfield '82 con un conjunto de imagenes binarias. 
@@ -16,7 +16,7 @@
 - Modelo Ising en una y dos dimensiones.
 
 
-## Trabajo Practico N°2: Perceptrón
+## [Trabajo Practico N°2: Perceptrón](https://github.com/ffraga98/RedesNeuronales/blob/main/TP2/TP2_FRAGA_102369.pdf)
 
 ### Ejercicio 1
 
@@ -48,7 +48,7 @@
 - Perceptrón multicapa del anterior ejercicio resolviendo con *simmulated annealing*.
 
 
-## Trabajo Practico N°3: Kohonen
+## [Trabajo Practico N°3: Kohonen](https://github.com/ffraga98/RedesNeuronales/blob/main/TP3/TP3_FRAGA_FERNANDO.pdf)
 
 ### Ejercicio 1
 
